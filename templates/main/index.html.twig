@@ -7,9 +7,8 @@
     <h1>Catalogue</h1>
     <div class="row">
         {% for produit in produits %}
-        <div class="col-sm-12 col-md-6 col-lg-3">
-
-        {{dump(produit)}}
+        <div class="col-sm-12 col-md-6 col-lg-3 mb-5">
+            {% include 'template_parts/_card.html.twig'%}
         </div>
     {% endfor %}
     </div>

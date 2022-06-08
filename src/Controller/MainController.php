@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Produit;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,14 @@ class MainController extends AbstractController
     {
         return $this->render('main/index.html.twig', [
             'produits' => $produitRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/produit/{id}', name: 'app_produit')]
+    public function produit(Produit $produit)
+    {
+        return $this->render('main/produit.html.twig', [
+            'produit' => $produit
         ]);
     }
 }
