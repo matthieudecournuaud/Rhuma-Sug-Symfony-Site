@@ -5,5 +5,43 @@
 {% block body %}
 <main class="container">
     <h1>Panier</h1>
+    {% if produits %}
+    <a href="{{path('app_main')}}" class="btn btn-info">Continuer mes achats</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Sous-total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = 0 %}
+            {% for produit in produits %}
+            <tr>
+                <td>{{produit.nom}}</td>
+                <td>{{produit.prix |format_currency('EUR')}}</td>
+                <td>{{produit.qtite}}</td>
+                <td>{{(produit.prix * produit.qtite) |format_currency('EUR')}}</td>
+            </tr>
+            {% set total = total + (produit.prix * produit.qtite) %}
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>{{total |format_currency('EUR')}}</td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="d-flex justify-content-center mt-5">
+        <a href="{{path('app_valider_panier')}}" class="btn btn-success">Valider le panier</a>
+    </div>
+    {% else %}
+    <p>Votre panier est vide</p>
+    {% endif %}
 </main>
 {% endblock %}

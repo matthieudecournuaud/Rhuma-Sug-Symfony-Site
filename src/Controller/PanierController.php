@@ -2,36 +2,44 @@
 
 namespace App\Controller;
 
+use App\Services\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PanierController extends AbstractController
 {
     #[Route('/panier', name: 'app_panier')]
-    public function index(RequestStack $requestStack): Response
+    public function index(PanierService $panierService): Response
     {
-        $session = $requestStack->getSession();
-        $panier = $session->get('panier');
+        $produits = $panierService->getProduitsPanier();
 
         return $this->render('panier/index.html.twig', [
-            'panier' => $panier
+            'produits' => $produits
         ]);
     }
+
     #[Route('/ajoutPanier/{id}', name: 'app_ajout_panier')]
-    public function ajoutPanier($id, RequestStack $requestStack): Response
+    public function ajoutPanier($id, PanierService $panierService): Response
     {
-        $session = $requestStack->getSession();
-        $panier = $session->get('panier');
+        $panierService->ajouterProduit($id);
 
-        if (isset($panier[$id])) {
-            $panier[$id]++;
-        } else {
-            $panier[$id] = 1;
-        }
-        $session->set('panier', $panier);
+        return $this->redirectToRoute('app_panier');
+    }
 
-        return $this->render('panier/index.html.twig', []);
+    #[Route('/validerPanier', name: 'app_valider_panier')]
+    public function validerPanier()
+    {
+        return $this->render('panier/paiement.html.twig');
+    }
+
+    #[Route('/payer', name: 'app_payer')]
+    public function payer(PanierService $panierService)
+    {
+        // TODO
+        // enregistre le panier en bdd avec l'état 1
+        $user = $this->getUser();
+        $panierService->enregistrerCommande($user);
+        return $this->redirectToRoute('app_main');
     }
 }
