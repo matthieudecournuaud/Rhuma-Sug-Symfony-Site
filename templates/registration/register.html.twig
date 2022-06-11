@@ -4,6 +4,7 @@
 
 {% block body %}
 <main class="container">
+<section class="form-register-home">
     <h1 class="mt-5">Inscription</h1>
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -19,5 +20,6 @@
         <button type="submit" class="btn btn-success">M'inscrire</button>
     {{ form_end(registrationForm) }}
 
+</section>
 </main>
 {% endblock %}

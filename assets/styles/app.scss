@@ -1,0 +1,39 @@
+body {
+    background-color: rgb(232, 177, 125);
+
+    #section-form-login {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .form-house {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            gap: 1rem;
+
+            #inputEmail {
+                background-color: white;
+            }
+
+        }
+    }
+
+    .row {
+        margin-top: 20vh;
+
+        .col img {
+            width: 100%;
+        }
+    }
+
+    .form-register-home {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 30%;
+        gap: 1rem;
+    }
+}
